@@ -85,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/05/03/hello-world/">Hello World</a>
+      <a class="p-name article-title" href="/2022/05/03/hello-world/">哈希表</a>
     </h1>
   
 
@@ -93,24 +93,152 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <h1 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h1><blockquote>
+<p>文章内有一些词语（网络热梗等）和插图，他是方便大家理解，并对算法产生（浓厚的）兴趣！</p>
+<p>不要根据一些注释，过分曲意理解作者哦！！！！</p>
+<p>文章内容来源本作者对该领域内容的归纳总结，文末附有主要文献来源</p>
+<p>文章画图软件（<a href="www.processon.com">www.processon.com</a>）</p>
+</blockquote>
+<h1 id="一、认识哈希表"><a href="#一、认识哈希表" class="headerlink" title="一、认识哈希表"></a>一、认识哈希表</h1><h3 id="1-1-哈希表出现缘由"><a href="#1-1-哈希表出现缘由" class="headerlink" title="1.1 哈希表出现缘由"></a>1.1 哈希表出现缘由</h3><p>要查一个数在数组中的位置，那可是太费劲了，只能从头开始一个个的比较，直到找到相等的才算完事。</p>
+<p>这个方法，说实话也太笨了，简直不是我这种懒人应该做的事。</p>
+<p>就不能有种方法直接看到这个数，就直接在数组中查到位置嘛？！</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/20268b76c05e8906b668df95ded5a07a.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>诶，你别说，还真有。</p>
+<p>因为总有比我更懒的，我只是懒是只能躺着，人家大佬的懒是直接动手解决，果然那句”懒是第一生产力“！</p>
+<h3 id="1-2-哈希表概述"><a href="#1-2-哈希表概述" class="headerlink" title="1.2 哈希表概述"></a>1.2 哈希表概述</h3><p>这个就是我今天要给家人们带来的<strong>哈希表</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/bff4563e6e8046da97e17d46c1135645.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><strong>哈希表，别名儿叫散列表，洋名儿叫 Hash Table。</strong></p>
+<p>我在上面说，希望有种方法，直接看到数，就知道它在数组中的位置，其实里就用到了哈希思想。</p>
+<p><strong>哈希思想就是说不用一些无用的比较，直接可以通过关键字 key 就能找到它的存储位置。</strong></p>
+<p>这里举一个栗子（可不是堂嫂栗子哦），可能更清楚点：</p>
+<p>智能班有 40 个学生，每个学生的学号由入学年份 + 年级 + 班级 + 编号组成，例如 2020.20.01.32 是 2020 年入学的 20 级 01 班的 32 号同学。（学号怕你看混，给你个”.”分割，贴心不~）</p>
+<p>现在有个需求（烦人的PM）：我们需要快速找到某个同学的个人信息。</p>
+<p>那这个时候我们就要建立一张表，按理来说我要是想要知道某个同学的个人信息，其实就知道学号就好了，但是在这不行，学号的值实在太大了，我们不能把学号当作下标。</p>
+<p>学号不可以，那什么可以呢？我们定睛一看，咦，编号可以呀，编号是从 1 ~ 40。（我真是一个小聪明啊）</p>
+<p><img src="https://img-blog.csdnimg.cn/1bcd7de85b104489a39306633cc6f1c7.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>那咋取到编号？不就是学号对 2020.20.01.00 取余就 KO了嘛。(你不会没理解把，不就是相当于(上面栗子32这位大帅哥)，32&#x2F;00&#x3D;32嘛)</p>
+<p>此时，如果我们想查学号为 2020.20.01.32 的学生个人信息，只要访问下标为 32的数据即可。</p>
+<p>其实这就可以在时间复杂度为 O(1) 内解决找到。（不要问我什么是时间复杂的，什么是空间复杂度，生产队的LV马上更，不要打拉）</p>
+<p>秒男实锤了。（这摸快，O(1)，比三秒都快哦）</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/1f3a8882e5fe6c5b560eeb38555bbbe6.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>用公式表示就是：**存储位置 &#x3D; f(关键字)**。</p>
+<p>这里的 <strong>f 又叫做哈希函数，每个 key 被对应到 0 ~ N-1 的范围内，并且放在合适的位置。</strong></p>
+<p>在上面的例子中 f(key) &#x3D; key % 2021210100。</p>
+<p><img src="https://img-blog.csdnimg.cn/062e5964757e4d2da53d2033c66d5db8.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>存储时，通过同一个哈希函数的计算 key 的哈希地址，并按照此哈希地址存储该 key。</p>
+<p>最后形成的表就是<strong>哈希表，它主要是面向查找的存储结构，简化了比较的过程，提高了效率。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/6c3a6a518174f28f5e737068b08382f5.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h3 id="1-3-哈希示例"><a href="#1-3-哈希示例" class="headerlink" title="1.3 哈希示例"></a>1.3 哈希示例</h3><p>上面看明白的话，那再举个大栗子加深点印象。</p>
+<p>有个 n &#x3D; 10 的数组，哈希函数 f(key) &#x3D; key % 10，将 4，10，11，19，29，39 散列到数组中。</p>
+<p>哈希函数确定后，剩下的就是计算关键字对应的存储位置。</p>
+<p>4 % 10 &#x3D; 4，所以将 4 放入下标为 4 的位置。</p>
+<p><img src="https://img-blog.csdnimg.cn/efdb86b8e40b486f92abab60e215dd9f.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p> 10 % 10 &#x3D; 0，所以将 10 放入下标为 0 的位置。</p>
+<p><img src="https://img-blog.csdnimg.cn/80075c9306554be2b75d52c72b7ba6f5.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>11 % 10 &#x3D; 1，所以将 11 放入下标为 1 的位置。</p>
+<p><img src="https://img-blog.csdnimg.cn/186ed1467b23497eafed38ba8840c73e.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>19 % 10 &#x3D; 9，所以将 19 放入下标为 9 的位置。</p>
+<p><img src="https://img-blog.csdnimg.cn/6da59d1dcaf34e8ab58fd1b28a3f52fc.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>29 % 10 &#x3D; 9，所以将 29 放入下标为 9 的位置。</p>
+<p>但是现在问题来了，下标为 9 的这个坑已经被 19 占了，这 29 计算出来的下标冲突了。（作为工具人的我，呜呜，就让我为你来平定冲突和亲去，昭君我来了）</p>
+<p><img src="https://img-blog.csdnimg.cn/eea0fadd357c4ea2901201c01a5cd1e7.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>这种情况有个学名，叫：<strong>哈希（散列）冲突</strong>。</p>
+<h3 id="1-4-处理哈希冲突"><a href="#1-4-处理哈希冲突" class="headerlink" title="1.4 处理哈希冲突"></a>1.4 处理哈希冲突</h3><p>对于两个不相等的关键字 key1 和 key2，若 f(key1) &#x3D; f(key2)，这就是哈希冲突。</p>
+<p>key1 占了坑，那 key2 只能想别的办法，啥办法呢？</p>
+<p>一般处理哈希冲突有以下几种办法：</p>
+<ul>
+<li>开放定址法</li>
+<li>再哈希（散列）函数法</li>
+<li>链地址法</li>
+<li>。。。(别想了，就等你来创造一个，作为算法“行业冥灯”，击垮他们！)</li>
+</ul>
+<p>1.4.1<strong>开放定址法</strong></p>
+<p><strong>开放定址法就是：一旦发生冲突，就选择另外一个可用的位置。</strong></p>
+<p>开放定址法有 2 个最常用的策略：</p>
+<ul>
+<li>线性探测法</li>
+<li>二次探测法</li>
+</ul>
+<p><strong>线性探测法</strong></p>
+<p><strong>线性探测法，顾名思义，直来直去的探测。</strong></p>
+<p>且看它的公式：</p>
+<p><strong>f(key) &#x3D; (f(key) + di) % m (di &#x3D; 1, 2, 3, … , m-1)。</strong></p>
+<p>我还是用“哈希示例”中的栗子（栗子都快熟了）：</p>
+<p>n &#x3D; 10 的数组，哈希函数 f(key) &#x3D; key % 10，将 4，10，11，19，29，39 散列到数组中。</p>
+<p><img src="https://img-blog.csdnimg.cn/bfbb6f258edb47dc8be44b09c35f8863.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>到了 29 的时候，29 % 10 &#x3D; 9。</p>
+<p>但此时下标 9 已经有了元素 19，所以此时探测下一个位置 (9 + 1) % 10 &#x3D; 0。</p>
+<p>下标为 0 的位置上已经有了元素 10，所以继续探测下一个位置 (9 + 2) % 10 &#x3D; 1。</p>
+<p>下标为 1 的位置上也有了元素 11，所以还得继续探测下一个位置 (9 + 3) % 10 &#x3D; 2。</p>
+<p>下标为 2 的位置上总算是空的，因此 29 找到了家（我家的猫不会跳舞，但是会爬树）：</p>
+<p><img src="https://img-blog.csdnimg.cn/c8eb7e2e7ba9402ea1bf38649e2a9a78.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>不知道你发现了没，对于 29 这个来说，本来只是和 19 冲突，整着整着和 10，11 也冲突了。</p>
+<p><strong>这样就使得每次要处理好几次冲突，而且这样会出现大量数字聚集在一个区域的情况，大大降低了插入和查找的效率。</strong></p>
+<p>后来不知道哪个大佬在线性的基础上做了改进，捣鼓出二次探测法。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/c1085dfd1d2ae6782dc81a8b324328c7.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><strong>二次探测法</strong></p>
+<p><strong>二次探测法就是把之前的 di 整成了平方</strong>，公式如下：</p>
+<p><strong>f(key) &#x3D; (f(key) + di) % m (di &#x3D; 1², -1², 2², -2², …, q², -q², q ≤ m&#x2F;2)</strong></p>
+<p>比如对于 29 来说，下标为 9 的位置上呆了19，所以此时探测下一个位置 (9 + 1²) % 10 &#x3D; 0。</p>
+<p>下标为 0 的位置上占了元素 10，那下一次就探测上一个位置 (9 - 1²) % 10 &#x3D; 8。</p>
+<p>下标为 8 的位置上空着，直接占住：</p>
+<p><img src="https://img-blog.csdnimg.cn/28095e6f94aa40558534372262f521f1.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/fad81605b7d6d3da5a7456af192304d1.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>1.4.2 <strong>再哈希（散列）函数法</strong></p>
+<p><strong>再哈希的话，就是不只是一个哈希函数，而是使用一组哈希函数 f1(key)、f2(key)、f3(key)….。</strong></p>
+<p>当使用第一个哈希函数计算到的存储位置被占了，那就用第二个哈希函数计算，反正总会有一个散列函数能把冲突解决掉。</p>
+<p>依次类推，直到找到空的位置，然后占住。</p>
+<p>当然这种方法不会出现大量数字聚集在一个区域的情况，但这种情况明显增加了计算的时间。</p>
+<p>1.4.3 <strong>链地址法</strong></p>
+<p>是谁说出现冲突后只能找别的坑位的，几个人蹲一个坑它不香嘛。（还记得伦敦的谜语吗）</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/b7c83a9351ffd8b3e07300b1a34482a1.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>可能真的有巨佬觉得香，然后就整出了链地址法。</p>
+<p><strong>链地址法呢是将得出同一个结果的 key 放在一个单链表中，哈希表存储每条单链表的头指针。</strong></p>
+<p>还是用老栗子：n &#x3D; 10 的数组，哈希函数 f(key) &#x3D; key % 10，将 4，10，11，19，29，39 散列。</p>
+<p>最后得到如下图：</p>
+<p><img src="https://img-blog.csdnimg.cn/ed555836b7e248f5b730f9a612eee67e.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>你看，链地址法就不会出现此坑被占，就得去找别的坑的情况。</p>
+<p>大家一起蹲，这样就绝不会出现找不到地址的情况，而是直接插到对应的单链表中即可，所以**插入的时间复杂度为 O(1)**。</p>
+<p>当然有得必有失，这样的情况必然造成了查找上的性能损耗，这里的<strong>查找的时间复杂度为 O(k)，其中 k &#x3D; n &#x2F; 单链表条数</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/b2be5c360f5db7b3b6da19870971e01c.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h3 id="1-5-结语和附录"><a href="#1-5-结语和附录" class="headerlink" title="1.5 结语和附录"></a>1.5 结语和附录</h3><p>好啦，到这里<strong>哈希表</strong>就讲完辣，是不是看起来还挺简单的。</p>
+<p>哈希表作为非常高高高高高效的查找数据结构，丢掉了关键字之间反复无意义的比较，直接一步到位查找结果，非常顶（咳咳）。</p>
+<p>这么看来它处理冲突啥的这点屁事就显得不是那么烦人了，毕竟有得有失才对嘛。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/fad81605b7d6d3da5a7456af192304d1.png" alt="img"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<blockquote>
+<p>文献来源：</p>
+<p>编程文青李狗蛋——ACM 选手带你玩转哈希表！</p>
+<p>LeetCode 242题目中的解法和讨论区</p>
+</blockquote>
+<blockquote>
+<p>下一篇：牛刀小试——LeetCode 242 (Python和Java)</p>
+<p>要想获得更多内容就关注我吧~</p>
+</blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/03/hello-world/" data-id="cl2pqyods0000w8u22whz3qty" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/03/hello-world/" data-id="cl2r9a4fm00004ku2hryee3p0" data-title="哈希表" class="article-share-link">Share</a>
       
       
       
@@ -153,7 +281,7 @@
       <ul>
         
           <li>
-            <a href="/2022/05/03/hello-world/">Hello World</a>
+            <a href="/2022/05/03/hello-world/">哈希表</a>
           </li>
         
       </ul>
